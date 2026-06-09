@@ -43,7 +43,7 @@ export default function JobsList() {
                     </div>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="font-medium text-foreground">{job.department}</span>
-                      <span>•</span>
+                      <span>-</span>
                       {job.totalApplications} total applications
                     </p>
                   </div>
