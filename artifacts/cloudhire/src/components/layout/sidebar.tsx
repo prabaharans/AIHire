@@ -26,7 +26,7 @@ export function Sidebar() {
       <div className="flex h-16 items-center px-6 border-b">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight text-primary">
           <Building className="h-5 w-5" />
-          CloudHire
+          AIHire
         </Link>
       </div>
       
