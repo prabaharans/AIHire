@@ -23,6 +23,12 @@ An AI-powered hiring and recruitment platform built with a modern tech stack. AI
 - **Dashboard**: Comprehensive dashboard for hiring managers
 - **Board View**: Kanban-style board for application management
 - **AI-Powered Application Processing**: Automated candidate screening
+- **Data Export**: Export candidates, jobs, and applications to CSV/JSON
+- **Notification System**: In-app and email notifications for important events
+- **Audit Logging**: Complete activity logging and change tracking
+- **User Preferences**: Customizable notification and appearance settings
+- **Advanced Filtering**: Search and filter across all entities
+- **Pagination**: Efficient data loading with pagination support
 
 ## 🛠 Tech Stack
 
@@ -181,6 +187,99 @@ Available scripts in the root workspace:
 - `pnpm build` - Build all packages for production
 - `pnpm type-check` - Run TypeScript type checking
 - `pnpm lint` - Lint all packages
+
+## 🔌 API Endpoints
+
+### Candidates
+- `GET /api/candidates` - List all candidates
+- `GET /api/candidates/:id` - Get candidate details
+- `POST /api/candidates` - Create new candidate
+- `PUT /api/candidates/:id` - Update candidate
+- `DELETE /api/candidates/:id` - Delete candidate
+
+### Jobs
+- `GET /api/jobs` - List all jobs
+- `GET /api/jobs/:id` - Get job details
+- `POST /api/jobs` - Create new job
+- `PUT /api/jobs/:id` - Update job
+- `DELETE /api/jobs/:id` - Delete job
+- `GET /api/jobs/summary` - Get jobs summary with application counts
+
+### Applications
+- `GET /api/applications` - List all applications
+- `GET /api/applications/:id` - Get application details
+- `POST /api/applications` - Create new application
+- `PUT /api/applications/:id` - Update application
+- `DELETE /api/applications/:id` - Delete application
+
+### Interviews
+- `GET /api/interviews` - List all interviews
+- `POST /api/interviews` - Schedule interview
+- `PUT /api/interviews/:id` - Update interview
+- `DELETE /api/interviews/:id` - Cancel interview
+
+### Export
+- `GET /api/export/candidates` - Export candidates (CSV/JSON)
+- `GET /api/export/jobs` - Export jobs (CSV/JSON)
+- `GET /api/export/applications` - Export applications (CSV/JSON)
+
+### Notifications
+- `GET /api/notifications` - Get user notifications
+- `PUT /api/notifications/:id/read` - Mark notification as read
+- `GET /api/notifications/preferences` - Get notification preferences
+- `PUT /api/notifications/preferences` - Update notification preferences
+
+### Audit Logs
+- `GET /api/audit-logs` - Get audit logs (paginated)
+- `GET /api/audit-logs/entity/:entityType/:entityId` - Get logs for specific entity
+
+### Dashboard
+- `GET /api/dashboard` - Get dashboard statistics
+- `GET /api/board` - Get board view data
+
+### Health
+- `GET /api/health` - Health check endpoint
+
+## 🚀 Recent Improvements (v2.0)
+
+### Backend Enhancements
+- **Error Handling Middleware**: Comprehensive error handling with proper HTTP status codes
+- **Request Validation**: Automatic request validation using Zod schemas
+- **Pagination Utilities**: Built-in pagination support for all list endpoints
+- **Query Utilities**: Advanced filtering and search capabilities
+- **Audit Logging**: Complete audit trail for all changes (CREATE, UPDATE, DELETE)
+- **Notifications System**: In-app and email notification support
+- **Export Functionality**: CSV and JSON export for all major entities
+- **Database Enhancements**: New tables for audit logs, notifications, user settings, and activity feed
+
+### Frontend Enhancements
+- **Notification Bell**: Real-time notification indicator in header
+- **Export Component**: Easy-to-use export button for data export
+- **User Settings Page**: Customize appearance, notifications, and regional settings
+- **Activity Log Page**: View complete system audit trail
+- **Notification Hooks**: React hooks for managing notifications
+- **Export Hooks**: Utilities for exporting data
+
+### New Database Tables
+- `audit_logs` - Complete audit trail of all changes
+- `notifications` - User notifications
+- `email_templates` - Customizable email templates
+- `user_settings` - User preferences and settings
+- `activity_feed` - Activity tracking
+
+## 🎯 Development Features
+
+### Middleware
+- `errorHandler` - Global error handling
+- `validation` - Request body/query/params validation
+- Async error wrapping
+
+### Utilities
+- Pagination helpers with configurable limits
+- Search and filter builders
+- CSV/JSON export functions
+- Audit logging and change tracking
+- Notification management
 
 ## 🤝 Contributing
 

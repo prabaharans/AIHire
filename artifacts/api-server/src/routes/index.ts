@@ -7,6 +7,9 @@ import interviewsRouter from "./interviews";
 import dashboardRouter from "./dashboard";
 import boardRouter from "./board";
 import aiApplyRouter from "./ai-apply";
+import exportRouter from "./export";
+import notificationsRouter from "./notifications";
+import auditRouter from "./audit";
 
 const router: IRouter = Router();
 
@@ -18,5 +21,8 @@ router.use(candidatesRouter);
 router.use(applicationsRouter);
 router.use(interviewsRouter);
 router.use(dashboardRouter);
+router.use(exportRouter);
+router.use(notificationsRouter);
+router.use(auditRouter);
 
 export default router;

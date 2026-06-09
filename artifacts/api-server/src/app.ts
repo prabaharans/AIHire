@@ -10,6 +10,7 @@ import {
   clerkProxyMiddleware,
   getClerkProxyHost,
 } from "./middlewares/clerkProxyMiddleware";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app: Express = express();
 
@@ -49,5 +50,8 @@ app.use(
 );
 
 app.use("/api", router);
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 export default app;
