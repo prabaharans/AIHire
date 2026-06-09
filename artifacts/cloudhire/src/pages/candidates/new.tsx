@@ -1,0 +1,1 @@
+export default function CandidateNew() { return <div className="p-8">New Candidate Placeholder</div>; }

@@ -1,0 +1,1 @@
+export default function InterviewsList() { return <div className="p-8">Interviews List Placeholder</div>; }

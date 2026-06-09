@@ -1,0 +1,1 @@
+export default function ApplicationsList() { return <div className="p-8">Applications List Placeholder</div>; }

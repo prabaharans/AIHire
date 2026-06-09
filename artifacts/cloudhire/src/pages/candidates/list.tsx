@@ -1,0 +1,1 @@
+export default function CandidatesList() { return <div className="p-8">Candidates List Placeholder</div>; }

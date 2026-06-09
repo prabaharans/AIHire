@@ -1,0 +1,1 @@
+export default function JobNew() { return <div className="p-8">New Job Placeholder</div>; }
