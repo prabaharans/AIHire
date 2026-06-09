@@ -16,6 +16,7 @@ import InterviewsList from "@/pages/interviews/list";
 import NotFound from "@/pages/not-found";
 import BoardIndex from "@/pages/board/index";
 import BoardJobDetail from "@/pages/board/job";
+import BoardProfile from "@/pages/board/profile";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/board" component={BoardIndex} />
+      <Route path="/board/profile" component={BoardProfile} />
       <Route path="/board/:id" component={BoardJobDetail} />
       
       <Route>
