@@ -6,11 +6,13 @@ import applicationsRouter from "./applications";
 import interviewsRouter from "./interviews";
 import dashboardRouter from "./dashboard";
 import boardRouter from "./board";
+import aiApplyRouter from "./ai-apply";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
 router.use(boardRouter);
+router.use(aiApplyRouter);
 router.use(jobsRouter);
 router.use(candidatesRouter);
 router.use(applicationsRouter);
