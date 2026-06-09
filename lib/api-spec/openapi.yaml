@@ -20,6 +20,8 @@ tags:
     description: Interview scheduling
   - name: dashboard
     description: Analytics and dashboard
+  - name: board
+    description: Public job board
 
 paths:
   /healthz:
@@ -447,6 +449,84 @@ paths:
         "204":
           description: Deleted
 
+  # Public Job Board
+  /board/jobs:
+    get:
+      operationId: listBoardJobs
+      tags: [board]
+      summary: List open jobs on the public board
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: department
+          schema:
+            type: string
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [full_time, part_time, contract, remote]
+        - in: query
+          name: location
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Open jobs list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BoardJob"
+
+  /board/jobs/{id}:
+    get:
+      operationId: getBoardJob
+      tags: [board]
+      summary: Get a single open job on the public board
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardJob"
+        "404":
+          description: Not found
+
+  /board/apply:
+    post:
+      operationId: quickApply
+      tags: [board]
+      summary: Quick-apply to a job (creates candidate + application atomically)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuickApplyInput"
+      responses:
+        "201":
+          description: Application submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuickApplyResult"
+        "400":
+          description: Validation error
+        "404":
+          description: Job not found
+
   # Dashboard / Analytics
   /dashboard/stats:
     get:
@@ -830,3 +910,61 @@ components:
           type: ["string", "null"]
         createdAt:
           type: string
+
+    BoardJob:
+      type: object
+      required: [id, title, department, location, type, createdAt]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum: [full_time, part_time, contract, remote]
+        description:
+          type: ["string", "null"]
+        requirements:
+          type: ["string", "null"]
+        salaryMin:
+          type: ["integer", "null"]
+        salaryMax:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+
+    QuickApplyInput:
+      type: object
+      required: [jobId, name, email]
+      properties:
+        jobId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        resumeUrl:
+          type: string
+        linkedinUrl:
+          type: string
+        coverLetter:
+          type: string
+
+    QuickApplyResult:
+      type: object
+      required: [applicationId, candidateId, message]
+      properties:
+        applicationId:
+          type: integer
+        candidateId:
+          type: integer
+        message:
+          type: string
+        alreadyApplied:
+          type: boolean

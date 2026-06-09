@@ -5,10 +5,12 @@ import candidatesRouter from "./candidates";
 import applicationsRouter from "./applications";
 import interviewsRouter from "./interviews";
 import dashboardRouter from "./dashboard";
+import boardRouter from "./board";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
+router.use(boardRouter);
 router.use(jobsRouter);
 router.use(candidatesRouter);
 router.use(applicationsRouter);

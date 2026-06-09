@@ -471,6 +471,66 @@ export const DeleteInterviewParams = zod.object({
 
 
 /**
+ * @summary List open jobs on the public board
+ */
+export const ListBoardJobsQueryParams = zod.object({
+  "search": zod.coerce.string().optional(),
+  "department": zod.coerce.string().optional(),
+  "type": zod.enum(['full_time', 'part_time', 'contract', 'remote']).optional(),
+  "location": zod.coerce.string().optional()
+})
+
+export const ListBoardJobsResponseItem = zod.object({
+  "id": zod.number(),
+  "title": zod.string(),
+  "department": zod.string(),
+  "location": zod.string(),
+  "type": zod.enum(['full_time', 'part_time', 'contract', 'remote']),
+  "description": zod.string().nullish(),
+  "requirements": zod.string().nullish(),
+  "salaryMin": zod.number().nullish(),
+  "salaryMax": zod.number().nullish(),
+  "createdAt": zod.string()
+})
+export const ListBoardJobsResponse = zod.array(ListBoardJobsResponseItem)
+
+
+/**
+ * @summary Get a single open job on the public board
+ */
+export const GetBoardJobParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const GetBoardJobResponse = zod.object({
+  "id": zod.number(),
+  "title": zod.string(),
+  "department": zod.string(),
+  "location": zod.string(),
+  "type": zod.enum(['full_time', 'part_time', 'contract', 'remote']),
+  "description": zod.string().nullish(),
+  "requirements": zod.string().nullish(),
+  "salaryMin": zod.number().nullish(),
+  "salaryMax": zod.number().nullish(),
+  "createdAt": zod.string()
+})
+
+
+/**
+ * @summary Quick-apply to a job (creates candidate + application atomically)
+ */
+export const QuickApplyBody = zod.object({
+  "jobId": zod.number(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "phone": zod.string().optional(),
+  "resumeUrl": zod.string().optional(),
+  "linkedinUrl": zod.string().optional(),
+  "coverLetter": zod.string().optional()
+})
+
+
+/**
  * @summary High-level hiring metrics
  */
 export const GetDashboardStatsResponse = zod.object({

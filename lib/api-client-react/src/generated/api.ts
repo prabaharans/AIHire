@@ -24,6 +24,7 @@ import type {
   Application,
   ApplicationInput,
   ApplicationUpdate,
+  BoardJob,
   Candidate,
   CandidateInput,
   CandidateUpdate,
@@ -37,10 +38,13 @@ import type {
   JobSummary,
   JobUpdate,
   ListApplicationsParams,
+  ListBoardJobsParams,
   ListCandidatesParams,
   ListInterviewsParams,
   ListJobsParams,
-  PipelineOverview
+  PipelineOverview,
+  QuickApplyInput,
+  QuickApplyResult
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -1703,6 +1707,238 @@ export const useDeleteInterview = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getDeleteInterviewMutationOptions(options));
+    }
+
+export const getListBoardJobsUrl = (params?: ListBoardJobsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/board/jobs?${stringifiedParams}` : `/api/board/jobs`
+}
+
+/**
+ * @summary List open jobs on the public board
+ */
+export const listBoardJobs = async (params?: ListBoardJobsParams, options?: RequestInit): Promise<BoardJob[]> => {
+
+  return customFetch<BoardJob[]>(getListBoardJobsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListBoardJobsQueryKey = (params?: ListBoardJobsParams,) => {
+    return [
+    `/api/board/jobs`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getListBoardJobsQueryOptions = <TData = Awaited<ReturnType<typeof listBoardJobs>>, TError = ErrorType<unknown>>(params?: ListBoardJobsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listBoardJobs>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListBoardJobsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listBoardJobs>>> = ({ signal }) => listBoardJobs(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listBoardJobs>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListBoardJobsQueryResult = NonNullable<Awaited<ReturnType<typeof listBoardJobs>>>
+export type ListBoardJobsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List open jobs on the public board
+ */
+
+export function useListBoardJobs<TData = Awaited<ReturnType<typeof listBoardJobs>>, TError = ErrorType<unknown>>(
+ params?: ListBoardJobsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listBoardJobs>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListBoardJobsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetBoardJobUrl = (id: number,) => {
+
+
+
+
+  return `/api/board/jobs/${id}`
+}
+
+/**
+ * @summary Get a single open job on the public board
+ */
+export const getBoardJob = async (id: number, options?: RequestInit): Promise<BoardJob> => {
+
+  return customFetch<BoardJob>(getGetBoardJobUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetBoardJobQueryKey = (id: number,) => {
+    return [
+    `/api/board/jobs/${id}`
+    ] as const;
+    }
+
+
+export const getGetBoardJobQueryOptions = <TData = Awaited<ReturnType<typeof getBoardJob>>, TError = ErrorType<void>>(id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getBoardJob>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetBoardJobQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getBoardJob>>> = ({ signal }) => getBoardJob(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getBoardJob>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetBoardJobQueryResult = NonNullable<Awaited<ReturnType<typeof getBoardJob>>>
+export type GetBoardJobQueryError = ErrorType<void>
+
+
+/**
+ * @summary Get a single open job on the public board
+ */
+
+export function useGetBoardJob<TData = Awaited<ReturnType<typeof getBoardJob>>, TError = ErrorType<void>>(
+ id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getBoardJob>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetBoardJobQueryOptions(id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getQuickApplyUrl = () => {
+
+
+
+
+  return `/api/board/apply`
+}
+
+/**
+ * @summary Quick-apply to a job (creates candidate + application atomically)
+ */
+export const quickApply = async (quickApplyInput: QuickApplyInput, options?: RequestInit): Promise<QuickApplyResult> => {
+
+  return customFetch<QuickApplyResult>(getQuickApplyUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      quickApplyInput,)
+  }
+);}
+
+
+
+
+export const getQuickApplyMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof quickApply>>, TError,{data: BodyType<QuickApplyInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof quickApply>>, TError,{data: BodyType<QuickApplyInput>}, TContext> => {
+
+const mutationKey = ['quickApply'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof quickApply>>, {data: BodyType<QuickApplyInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  quickApply(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type QuickApplyMutationResult = NonNullable<Awaited<ReturnType<typeof quickApply>>>
+    export type QuickApplyMutationBody = BodyType<QuickApplyInput>
+    export type QuickApplyMutationError = ErrorType<void>
+
+    /**
+ * @summary Quick-apply to a job (creates candidate + application atomically)
+ */
+export const useQuickApply = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof quickApply>>, TError,{data: BodyType<QuickApplyInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof quickApply>>,
+        TError,
+        {data: BodyType<QuickApplyInput>},
+        TContext
+      > => {
+      return useMutation(getQuickApplyMutationOptions(options));
     }
 
 export const getGetDashboardStatsUrl = () => {

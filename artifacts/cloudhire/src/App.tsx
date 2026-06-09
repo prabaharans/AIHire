@@ -14,25 +14,34 @@ import CandidateDetail from "@/pages/candidates/detail";
 import ApplicationsList from "@/pages/applications/list";
 import InterviewsList from "@/pages/interviews/list";
 import NotFound from "@/pages/not-found";
+import BoardIndex from "@/pages/board/index";
+import BoardJobDetail from "@/pages/board/job";
 
 const queryClient = new QueryClient();
 
 function Router() {
   return (
-    <AppLayout>
-      <Switch>
-        <Route path="/" component={Dashboard} />
-        <Route path="/jobs" component={JobsList} />
-        <Route path="/jobs/new" component={JobNew} />
-        <Route path="/jobs/:id" component={JobDetail} />
-        <Route path="/candidates" component={CandidatesList} />
-        <Route path="/candidates/new" component={CandidateNew} />
-        <Route path="/candidates/:id" component={CandidateDetail} />
-        <Route path="/applications" component={ApplicationsList} />
-        <Route path="/interviews" component={InterviewsList} />
-        <Route component={NotFound} />
-      </Switch>
-    </AppLayout>
+    <Switch>
+      <Route path="/board" component={BoardIndex} />
+      <Route path="/board/:id" component={BoardJobDetail} />
+      
+      <Route>
+        <AppLayout>
+          <Switch>
+            <Route path="/" component={Dashboard} />
+            <Route path="/jobs" component={JobsList} />
+            <Route path="/jobs/new" component={JobNew} />
+            <Route path="/jobs/:id" component={JobDetail} />
+            <Route path="/candidates" component={CandidatesList} />
+            <Route path="/candidates/new" component={CandidateNew} />
+            <Route path="/candidates/:id" component={CandidateDetail} />
+            <Route path="/applications" component={ApplicationsList} />
+            <Route path="/interviews" component={InterviewsList} />
+            <Route component={NotFound} />
+          </Switch>
+        </AppLayout>
+      </Route>
+    </Switch>
   );
 }
 

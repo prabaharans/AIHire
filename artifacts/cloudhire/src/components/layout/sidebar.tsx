@@ -6,7 +6,8 @@ import {
   FileText, 
   Calendar,
   Settings,
-  Building
+  Building,
+  Globe
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +17,7 @@ const navigation = [
   { name: "Candidates", href: "/candidates", icon: Users },
   { name: "Applications", href: "/applications", icon: FileText },
   { name: "Interviews", href: "/interviews", icon: Calendar },
+  { name: "Job Board", href: "/board", icon: Globe },
 ];
 
 export function Sidebar() {

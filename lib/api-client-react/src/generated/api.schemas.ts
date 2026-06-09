@@ -340,6 +340,50 @@ export interface ActivityItem {
   createdAt: string;
 }
 
+export type BoardJobType = typeof BoardJobType[keyof typeof BoardJobType];
+
+
+export const BoardJobType = {
+  full_time: 'full_time',
+  part_time: 'part_time',
+  contract: 'contract',
+  remote: 'remote',
+} as const;
+
+export interface BoardJob {
+  id: number;
+  title: string;
+  department: string;
+  location: string;
+  type: BoardJobType;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  requirements?: string | null;
+  /** @nullable */
+  salaryMin?: number | null;
+  /** @nullable */
+  salaryMax?: number | null;
+  createdAt: string;
+}
+
+export interface QuickApplyInput {
+  jobId: number;
+  name: string;
+  email: string;
+  phone?: string;
+  resumeUrl?: string;
+  linkedinUrl?: string;
+  coverLetter?: string;
+}
+
+export interface QuickApplyResult {
+  applicationId: number;
+  candidateId: number;
+  message: string;
+  alreadyApplied?: boolean;
+}
+
 export type ListJobsParams = {
 status?: ListJobsStatus;
 department?: string;
@@ -389,5 +433,22 @@ export const ListInterviewsStatus = {
   scheduled: 'scheduled',
   completed: 'completed',
   cancelled: 'cancelled',
+} as const;
+
+export type ListBoardJobsParams = {
+search?: string;
+department?: string;
+type?: ListBoardJobsType;
+location?: string;
+};
+
+export type ListBoardJobsType = typeof ListBoardJobsType[keyof typeof ListBoardJobsType];
+
+
+export const ListBoardJobsType = {
+  full_time: 'full_time',
+  part_time: 'part_time',
+  contract: 'contract',
+  remote: 'remote',
 } as const;
 
