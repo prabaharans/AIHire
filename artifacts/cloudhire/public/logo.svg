@@ -1,0 +1,7 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="36" height="36" rx="8" y="2" fill="#4264D6"/>
+  <path d="M10 20C10 14.477 14.477 10 20 10C23.314 10 26.266 11.525 28.2 13.917" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M20 26C22.761 26 25 23.761 25 21C25 18.239 22.761 16 20 16C17.239 16 15 18.239 15 21C15 23.761 17.239 26 20 26Z" fill="white"/>
+  <path d="M25 21C25 23.761 22.761 26 20 26V30C24.971 30 29 25.971 29 21H25Z" fill="white" opacity="0.5"/>
+  <text x="46" y="26" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="18" fill="#0C1527" letter-spacing="-0.5">AIHire</text>
+</svg>
